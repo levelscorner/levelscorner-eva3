@@ -1,0 +1,239 @@
+{
+  "generated_at": "2026-04-24T16:27:29.693797Z",
+  "events": [
+    {
+      "ts": "2026-04-24T16:25:36Z",
+      "iteration": 0,
+      "kind": "user",
+      "payload": "How does MCP (Model Context Protocol) work and who uses it?"
+    },
+    {
+      "ts": "2026-04-24T16:25:53Z",
+      "iteration": 1,
+      "kind": "llm",
+      "payload": {
+        "raw": "```json\n{\n  \"tool_name\": \"web_search\",\n  \"tool_arguments\": {\n    \"query\": \"Model Context Protocol MCP\"\n  }\n}\n```",
+        "parsed": {
+          "tool_name": "web_search",
+          "tool_arguments": {
+            "query": "Model Context Protocol MCP"
+          }
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:25:53Z",
+      "iteration": 1,
+      "kind": "tool_call",
+      "payload": {
+        "name": "web_search",
+        "arguments": {
+          "query": "Model Context Protocol MCP"
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:25:56Z",
+      "iteration": 1,
+      "kind": "tool_result",
+      "payload": {
+        "name": "web_search",
+        "result": {
+          "query": "Model Context Protocol MCP",
+          "count": 5,
+          "results": [
+            {
+              "rank": 1,
+              "title": "Model Context Protocol - Wikipedia",
+              "url": "https://en.wikipedia.org/wiki/Model_Context_Protocol",
+              "snippet": "The Model Context Protocol (MCP) is an open standard and open-source framework introduced by Anthropic in November 2024 to standardize the way artificial intelligence (AI) systems like large language models (LLMs) integrate and share data with external tools, systems, and data sources. [1]"
+            },
+            {
+              "rank": 2,
+              "title": "What is the Model Context Protocol (MCP)?",
+              "url": "https://modelcontextprotocol.io/docs/getting-started/intro",
+              "snippet": "What is the Model Context Protocol (MCP)? MCP (Model Context Protocol) is an open-source standard for connecting AI applications to external systems."
+            },
+            {
+              "rank": 3,
+              "title": "Model Context Protocol - GitHub",
+              "url": "https://github.com/modelcontextprotocol",
+              "snippet": "Model Context Protocol (MCP) is an open protocol for connecting LLM applications with external data sources and tools. Learn how to use MCP with documentation, specification, SDKs, and servers."
+            },
+            {
+              "rank": 4,
+              "title": "MCP Docs – Model Context Protocol （MCP）",
+              "url": "https://modelcontextprotocol.info/docs/",
+              "snippet": "MCP is a standardized protocol designed to enhance the interaction between Large Language Models (LLMs) and applications by providing structured context management."
+            },
+            {
+              "rank": 5,
+              "title": "Model Context Protocol (MCP) Companion Guide",
+              "url": "https://www.cisecurity.org/insights/white-papers/controls-v8-1-model-context-protocol-companion-guide",
+              "snippet": "4 days ago · The Model Context Protocol (MCP) is an open standard designed to let artificial intelligence (AI) systems interact consistently with external tools, data sources, and services. Rather than relying on proprietary or model-specific integrations, MCP provides a common, interoperable framework so that different models, agents, and platforms can access the same set of capabilities in a controlled ..."
+            }
+          ],
+          "note": "Pick the most relevant URLs and call fetch_page on each."
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:26:14Z",
+      "iteration": 2,
+      "kind": "llm",
+      "payload": {
+        "raw": "```json\n{\n  \"tool_name\": \"fetch_page\",\n  \"tool_arguments\": {\n    \"url\": \"https://modelcontextprotocol.io/docs/getting-started/intro\"\n  }\n}\n```",
+        "parsed": {
+          "tool_name": "fetch_page",
+          "tool_arguments": {
+            "url": "https://modelcontextprotocol.io/docs/getting-started/intro"
+          }
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:26:14Z",
+      "iteration": 2,
+      "kind": "tool_call",
+      "payload": {
+        "name": "fetch_page",
+        "arguments": {
+          "url": "https://modelcontextprotocol.io/docs/getting-started/intro"
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:26:15Z",
+      "iteration": 2,
+      "kind": "tool_result",
+      "payload": {
+        "name": "fetch_page",
+        "result": {
+          "url": "https://modelcontextprotocol.io/docs/getting-started/intro",
+          "title": "What is the Model Context Protocol (MCP)? - Model Context Protocol",
+          "text": "What can MCP enable?\n- Agents can access your Google Calendar and Notion, acting as a more personalized AI assistant.\n- Claude Code can generate an entire web app using a Figma design.\n- Enterprise chatbots can connect to multiple databases across an organization, empowering users to analyze data using chat.\n- AI models can create 3D designs on Blender and print them out using a 3D printer.\nWhy does MCP matter?\nDepending on where you sit in the ecosystem, MCP can have a range of benefits.- Developers: MCP reduces development time and complexity when building, or integrating with, an AI application or agent.\n- AI applications or agents: MCP provides access to an ecosystem of data sources, tools and apps which will enhance capabilities and improve the end-user experience.\n- End-users: MCP results in more capable AI applications or agents which can access your data and take actions on your behalf when necessary.\nBroad ecosystem support\nMCP is an open protocol supported across a wide range of clients and servers. AI assistants like Claude and ChatGPT, development tools like Visual Studio Code, Cursor, MCPJam, and many others all support MCP — making it easy to build once and integrate everywhere.Start Building\nBuild servers\nCreate MCP servers to expose your data and tools\nBuild clients\nDevelop applications that connect to MCP servers\nBuild MCP Apps\nBuild interactive apps that run inside AI clients\nLearn more\nUnderstand concepts\nLearn the core concepts and architecture of MCP",
+          "truncated": false,
+          "bytes": 1497
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:26:32Z",
+      "iteration": 3,
+      "kind": "llm",
+      "payload": {
+        "raw": "```json\n{\n  \"tool_name\": \"fetch_page\",\n  \"tool_arguments\": {\n    \"url\": \"https://en.wikipedia.org/wiki/Model_Context_Protocol\"\n  }\n}\n```",
+        "parsed": {
+          "tool_name": "fetch_page",
+          "tool_arguments": {
+            "url": "https://en.wikipedia.org/wiki/Model_Context_Protocol"
+          }
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:26:32Z",
+      "iteration": 3,
+      "kind": "tool_call",
+      "payload": {
+        "name": "fetch_page",
+        "arguments": {
+          "url": "https://en.wikipedia.org/wiki/Model_Context_Protocol"
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:26:35Z",
+      "iteration": 3,
+      "kind": "tool_result",
+      "payload": {
+        "name": "fetch_page",
+        "result": {
+          "url": "https://en.wikipedia.org/wiki/Model_Context_Protocol",
+          "title": "Model Context Protocol - Wikipedia",
+          "text": "Model Context Protocol\n| Developed by | Anthropic |\n|---|---|\n| Introduced | November 25, 2024 |\n| Industry | Artificial intelligence |\n| Connector type | |\n| Website | modelcontextprotocol |\nThe Model Context Protocol (MCP) is an open standard and open-source framework introduced by Anthropic in November 2024 to standardize the way artificial intelligence (AI) systems like large language models (LLMs) integrate and share data with external tools, systems, and data sources.[1] MCP provides a universal interface for reading files, executing functions, and handling contextual prompts.[2] Following its announcement, the protocol was adopted by major AI providers, including OpenAI and Google DeepMind.[3][4]\nBackground\n[edit]MCP was announced by Anthropic in November 2024 as an open standard[5] for connecting AI assistants to data systems such as content repositories, business management tools, and development environments.[6] It aims to address the challenge of information silos and legacy systems.[6] Before MCP, developers often had to build custom connectors for each data source or tool, resulting in what Anthropic described as an \"N×M\" data integration problem.[6][7]\nEarlier stop-gap approaches—such as OpenAI's 2023 \"function-calling\" API and the ChatGPT plug-in framework—solved similar problems but required vendor-specific connectors.[7] MCP re-uses the message-flow ideas of the Language Server Protocol (LSP) and is transported over JSON-RPC 2.0.[8]\nIn December 2025, Anthropic donated the MCP to the Agentic AI Foundation (AAIF), a directed fund under the Linux Foundation, co-founded by Anthropic, Block and OpenAI, with support from other companies.[9]\nFeatures\n[edit]The protocol was released with software development kits (SDKs) in programming languages including Python, TypeScript, C# and Java.[8][10] Anthropic maintains an open-source repository of reference MCP server implementations and SDKs.[11]\nMCP defines a standardized framework for integrating AI systems with external data sources and tools.[2] It includes specifications for data ingestion and transformation, contextual metadata tagging, and AI interoperability across different platforms. The protocol also supports bidirectional connections between data sources and AI tools.[6][non-primary source needed]\nMCP enables applications such as querying structured databases with plain language in the field of natural language data access.[8]\nThe protocol is used in AI-assisted software development tools. Integrated development environments (IDEs), coding platforms such as Replit, and code intelligence tools like Sourcegraph have adopted MCP to grant AI coding assistants real-time access to project context.[5]\nAdoption\n[edit]In March 2025, OpenAI officially adopted the MCP, after having integrated the standard across its products, including the ChatGPT desktop app.[3][2] In September 2025, OpenAI added support for MCP to ChatGPT apps. This allows for third-party access inside ChatGPT.[12]\nMCP can be integrated with Microsoft Semantic Kernel,[13] and Azure OpenAI.[14] MCP servers can be deployed to Cloudflare.[15][non-primary source needed]\nIn April 2026, the AAIF held the MCP Dev Summit North America in New York City, drawing approximately 1,200 attendees.[16]\nReception\n[edit]The Verge reported that MCP addresses a growing demand for AI agents that are contextually aware and capable of pulling from diverse sources.[5] The protocol's rapid uptake by OpenAI, Google DeepMind, and toolmakers like Zed and Sourcegraph suggests growing consensus around its utility.[3][17]\nIn April 2025, security researchers released an analysis that concluded there are multiple outstanding security issues with MCP, including prompt injection,[18] tool permissions that allow for combining tools to exfiltrate data,[19] and lookalike tools that can silently replace trusted ones.[20]\nMCP has been likened to OpenAPI, a similar specification that aims to describe APIs.[21][22]\nSee also\n[edit]- Agent2Agent – Open protocol for communication between AI agents\n- AI governance – Guidelines and laws to regulate AI\n- Application programming interface – Connection between computers or programs\n- LangChain – Language model application development framework\n- Machine learning – Study of algorithms that improve automatically through experience\n- Software agent – Computer program acting for a user\nReferences\n[edit]- ^ David, Emilia (November 25, 2024). \"Anthropic releases Model Context Protocol to standardize AI-data integration\". VentureBeat. Retrieved 2025-05-12.\n- ^ a b c Kumar, Vinay (March 26, 2025). \"The open source Model Context Protocol was just updated — here's why it's a big deal\". VentureBeat. Retrieved 2025-05-12.\n- ^ a b c Wiggers, Kyle (March 25, 2025). \"OpenAI adopts rival Anthropic's standard for connecting AI models to data\". TechCrunch.\n- ^ Wiggers, Kyle (April 9, 2025). \"Google to embrace Anthropic's standard for connecting AI models to data\". TechCrunch. Retrieved 2025-05-12.\n- ",
+          "truncated": true,
+          "bytes": 7897
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:27:07Z",
+      "iteration": 4,
+      "kind": "llm",
+      "payload": {
+        "raw": "```json\n{\n  \"tool_name\": \"save_answer\",\n  \"tool_arguments\": {\n    \"question\": \"How does MCP (Model Context Protocol) work and who uses it?\",\n    \"answer\": \"The Model Context Protocol (MCP) is an open-source standard for connecting artificial intelligence (AI) applications to external tools, systems, and data sources [1, 2]. Introduced by Anthropic in November 2024, it works by providing a universal, standardized interface that allows AI models to perform tasks like reading files and executing functions without needing custom-built connectors for each tool [2].\\n\\n### How it Works\\nMCP aims to reduce development time and complexity by creating a common framework for AI integration [1]. Before MCP, developers often had to create unique connectors for each data source or tool an AI needed to access [2]. MCP solves this by establishing a standard protocol that re-uses concepts from the Language Server Protocol (LSP) and is transported over JSON-RPC 2.0 [2]. This allows developers to build a connection once and have it be usable across any AI application that supports the protocol, enabling more capable AI agents that can access data and take actions on a user's behalf [1].\\n\\n### Who Uses It\\nMCP was developed by Anthropic but is an open protocol with broad ecosystem support [1, 2].\\n*   **AI Providers**: Following its announcement, major AI providers including OpenAI and Google DeepMind adopted the protocol [2].\\n*   **AI Applications**: AI assistants like Claude and ChatGPT support MCP [1].\\n*   **Development Tools**: Coding platforms and Integrated Development Environments (IDEs) such as Visual Studio Code, Cursor, and Sourcegraph have adopted MCP to provide AI coding assistants with real-time access to project context [1, 2].\\n\\nThe protocol was released with software development kits (SDKs) in languages like Python, TypeScript, C#, and Java to facilitate adoption [2].\",\n    \"sources\": [\n      {\n        \"title\": \"What is the Model Context Protocol (MCP)? - Model Context Protocol\",\n        \"url\": \"https://modelcontextprotocol.io/docs/getting-started/intro\"\n      },\n      {\n        \"title\": \"Model Context Protocol - Wikipedia\",\n        \"url\": \"https://en.wikipedia.org/wiki/Model_Context_Protocol\"\n      }\n    ]\n  }\n}\n```",
+        "parsed": {
+          "tool_name": "save_answer",
+          "tool_arguments": {
+            "question": "How does MCP (Model Context Protocol) work and who uses it?",
+            "answer": "The Model Context Protocol (MCP) is an open-source standard for connecting artificial intelligence (AI) applications to external tools, systems, and data sources [1, 2]. Introduced by Anthropic in November 2024, it works by providing a universal, standardized interface that allows AI models to perform tasks like reading files and executing functions without needing custom-built connectors for each tool [2].\n\n### How it Works\nMCP aims to reduce development time and complexity by creating a common framework for AI integration [1]. Before MCP, developers often had to create unique connectors for each data source or tool an AI needed to access [2]. MCP solves this by establishing a standard protocol that re-uses concepts from the Language Server Protocol (LSP) and is transported over JSON-RPC 2.0 [2]. This allows developers to build a connection once and have it be usable across any AI application that supports the protocol, enabling more capable AI agents that can access data and take actions on a user's behalf [1].\n\n### Who Uses It\nMCP was developed by Anthropic but is an open protocol with broad ecosystem support [1, 2].\n*   **AI Providers**: Following its announcement, major AI providers including OpenAI and Google DeepMind adopted the protocol [2].\n*   **AI Applications**: AI assistants like Claude and ChatGPT support MCP [1].\n*   **Development Tools**: Coding platforms and Integrated Development Environments (IDEs) such as Visual Studio Code, Cursor, and Sourcegraph have adopted MCP to provide AI coding assistants with real-time access to project context [1, 2].\n\nThe protocol was released with software development kits (SDKs) in languages like Python, TypeScript, C#, and Java to facilitate adoption [2].",
+            "sources": [
+              {
+                "title": "What is the Model Context Protocol (MCP)? - Model Context Protocol",
+                "url": "https://modelcontextprotocol.io/docs/getting-started/intro"
+              },
+              {
+                "title": "Model Context Protocol - Wikipedia",
+                "url": "https://en.wikipedia.org/wiki/Model_Context_Protocol"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:27:07Z",
+      "iteration": 4,
+      "kind": "tool_call",
+      "payload": {
+        "name": "save_answer",
+        "arguments": {
+          "question": "How does MCP (Model Context Protocol) work and who uses it?",
+          "answer": "The Model Context Protocol (MCP) is an open-source standard for connecting artificial intelligence (AI) applications to external tools, systems, and data sources [1, 2]. Introduced by Anthropic in November 2024, it works by providing a universal, standardized interface that allows AI models to perform tasks like reading files and executing functions without needing custom-built connectors for each tool [2].\n\n### How it Works\nMCP aims to reduce development time and complexity by creating a common framework for AI integration [1]. Before MCP, developers often had to create unique connectors for each data source or tool an AI needed to access [2]. MCP solves this by establishing a standard protocol that re-uses concepts from the Language Server Protocol (LSP) and is transported over JSON-RPC 2.0 [2]. This allows developers to build a connection once and have it be usable across any AI application that supports the protocol, enabling more capable AI agents that can access data and take actions on a user's behalf [1].\n\n### Who Uses It\nMCP was developed by Anthropic but is an open protocol with broad ecosystem support [1, 2].\n*   **AI Providers**: Following its announcement, major AI providers including OpenAI and Google DeepMind adopted the protocol [2].\n*   **AI Applications**: AI assistants like Claude and ChatGPT support MCP [1].\n*   **Development Tools**: Coding platforms and Integrated Development Environments (IDEs) such as Visual Studio Code, Cursor, and Sourcegraph have adopted MCP to provide AI coding assistants with real-time access to project context [1, 2].\n\nThe protocol was released with software development kits (SDKs) in languages like Python, TypeScript, C#, and Java to facilitate adoption [2].",
+          "sources": [
+            {
+              "title": "What is the Model Context Protocol (MCP)? - Model Context Protocol",
+              "url": "https://modelcontextprotocol.io/docs/getting-started/intro"
+            },
+            {
+              "title": "Model Context Protocol - Wikipedia",
+              "url": "https://en.wikipedia.org/wiki/Model_Context_Protocol"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:27:07Z",
+      "iteration": 4,
+      "kind": "tool_result",
+      "payload": {
+        "name": "save_answer",
+        "result": {
+          "saved": true,
+          "path": "/Users/level/ws/projects/mini-perplexity/answers/how-does-mcp-model-context-protocol-work-and-who-uses-it-2.md",
+          "bytes": 2129,
+          "source_count": 2
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:27:29Z",
+      "iteration": 5,
+      "kind": "llm",
+      "payload": {
+        "raw": "```json\n{\"answer\": \"I've synthesized an answer about how the Model Context Protocol (MCP) works and who uses it. The answer has been saved to disk at: /Users/level/ws/projects/mini-perplexity/answers/how-does-mcp-model-context-protocol-work-and-who-uses-it-2.md\"}\n```",
+        "parsed": {
+          "answer": "I've synthesized an answer about how the Model Context Protocol (MCP) works and who uses it. The answer has been saved to disk at: /Users/level/ws/projects/mini-perplexity/answers/how-does-mcp-model-context-protocol-work-and-who-uses-it-2.md"
+        }
+      }
+    },
+    {
+      "ts": "2026-04-24T16:27:29Z",
+      "iteration": 5,
+      "kind": "final",
+      "payload": "I've synthesized an answer about how the Model Context Protocol (MCP) works and who uses it. The answer has been saved to disk at: /Users/level/ws/projects/mini-perplexity/answers/how-does-mcp-model-context-protocol-work-and-who-uses-it-2.md"
+    }
+  ]
+}

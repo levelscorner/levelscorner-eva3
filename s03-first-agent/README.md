@@ -4,6 +4,9 @@ Session 3 of EAG V3. The step from "LLM" to "Agent."
 
 **Assignment target:** Chrome extension that runs a real agent loop — ≥ 3 custom tools, full-history context carry across turns, reasoning chain rendered in the UI, YouTube demo + LLM logs as deliverables.
 
+> ✅ **Submitted.** Video + logs + write-up in [`submission/`](submission/).
+> Video: <https://youtu.be/w-UFTm1Vivw>
+
 > 👉 **Ready to ship?** Follow [`RUNBOOK.md`](RUNBOOK.md) — step-by-step from API key to submitted in Canvas (~45 min).
 
 Full repo context: [`../docs/KNOWLEDGE.md`](../docs/KNOWLEDGE.md)
