@@ -15,12 +15,16 @@ See [`Session2Assignment.md`](Session2Assignment.md).
 ### S03 — First agent: Mini Perplexity
 
 ▶️ Demo: https://youtu.be/w-UFTm1Vivw
+
 Submission package: [`s03-first-agent/submission/`](s03-first-agent/submission/)
+
 Primary code repo: https://github.com/levelscorner/mini-perplexity
 
 ### S04 - Adding tools my agents
 
 ▶️ Demo: https://youtu.be/NZrPKL6Dx_8 
+
 Primary code repo: https://github.com/levelscorner/mini-perplexity
+
 LinkedIn - https://www.linkedin.com/posts/abhinavrl4f_started-with-the-simplest-possible-agent-ugcPost-7456658016042672129-E2xW?utm_source=share&utm_medium=member_desktop&rcm=ACoAAA8ncJsBZhCr8TrRlejWf5hzo-lquAQWhnQ
 
