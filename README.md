@@ -22,3 +22,5 @@ Primary code repo: https://github.com/levelscorner/mini-perplexity
 
 ▶️ Demo: https://youtu.be/NZrPKL6Dx_8 
 Primary code repo: https://github.com/levelscorner/mini-perplexity
+LinkedIn - https://www.linkedin.com/posts/abhinavrl4f_started-with-the-simplest-possible-agent-ugcPost-7456658016042672129-E2xW?utm_source=share&utm_medium=member_desktop&rcm=ACoAAA8ncJsBZhCr8TrRlejWf5hzo-lquAQWhnQ
+
