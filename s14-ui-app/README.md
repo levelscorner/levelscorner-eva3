@@ -37,17 +37,30 @@ Rejection is surgical: a poisoned component is dropped and the rest of the surfa
 
 ## Verified end to end
 
-Live against `glc_v3` with `ollama/phi4:latest`, three turns carrying conversation forward:
+Live against `glc_v3`, three turns carrying the conversation forward, on `moonshot/kimi-k3`:
 
 | Turn | Asked | Composed | Refused |
 |---|---|---|---|
-| 1 | compare three languages, cite sources | Heading, **DataTable**, **EvidenceCard**, Button | 0 |
-| 2 | show the migration risk | **Checklist**, **Timeline**, Button | 0 |
-| 3 | trend over 6 months plus a headline number | **Sparkline**, **StatTile**, Checklist, Timeline, Button | 0 |
+| 1 | compare three languages, cite sources | Heading, Text, **DataTable**, **BarChart**, **EvidenceCard**, **StatTile**, **Notice**, Choice | 0 |
+| 2 | show the migration risk | **Checklist**, **Timeline**, DataTable, StatTile, Notice, Choice | 0 |
+| 3 | trend over 6 months plus a headline number | **Sparkline**, **StatTile**, **KeyValue**, EvidenceCard, Notice | 1 |
 
-The component matches the shape of the data in every case: a comparison became a table, a
-sourced claim became an EvidenceCard, a sequence became a Timeline, a trend became a Sparkline,
-a single figure became a StatTile. No turn was a wall of text.
+The component matches the shape of the data in every case: a comparison became a table and a
+chart, a sourced claim became an EvidenceCard, a sequence became a Timeline, a trend became a
+Sparkline, a single figure became a StatTile. No turn was a wall of text.
+
+Model choice changes composition quality sharply. Same prompts, same wall:
+
+| | `ollama/phi4` | `moonshot/kimi-k3` |
+|---|---|---|
+| component types, turn 1 | 5 | **9** |
+| latency per turn | 15 to 40s | ~100s |
+| rejections | 0 | 0 |
+
+K3 always reasons, spending roughly 2,700 output tokens before it emits a character, and
+`reasoning: "off"` does not change that. A 1,400 token cap therefore returns
+`stop_reason=max_tokens` with an empty string, which reads as a broken model and is really a
+budget bug. `ATLAS_MAX_TOKENS` defaults to 6,000 for that reason.
 
 ## The adversarial case
 
@@ -75,6 +88,20 @@ from the interface. That is the closed set doing exactly its job, and it is also
 this design: a weaker model drifts, and drift becomes missing UI rather than a wrong answer. The
 fix was a better instruction, listing the four permitted tones explicitly, not a wider enum.
 Widening the enum to accommodate the model would have dissolved the invariant it exists to hold.
+
+**The wall also had a false positive, and finding it mattered more than the attacks.** The deep
+scan refused any key matching `^on[a-z]+$` anywhere inside bound data. Kimi placed a legitimate
+`onPick` inside an option object and lost its entire "next steps" control. The same rule would
+have refused ordinary data fields called `online`, `once` or `only`, which is a bug waiting to
+happen in any real dataset.
+
+The fix was to be precise about where the danger actually is. At the **property** level anything
+handler-shaped is still refused, because a property is a slot the renderer reads. Inside **data**
+the check is now the real DOM handler names, because the renderer never turns a data key into an
+attribute: values reach the DOM through `textContent`. Verified after the change: the five attack
+classes are still refused, a nested `onerror` in table data is still caught, and a column named
+`online` now renders. A wall that refuses safe things trains you to widen it, which is how walls
+die.
 
 **Declarative UI trades expressivity for a bounded attack surface, and the trade is real.**
 Atlas cannot render anything outside 15 components. A generated-code approach could render

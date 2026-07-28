@@ -57,6 +57,24 @@ _JS_URL = re.compile(r"^\s*(javascript|data|vbscript):", re.I)
 _HANDLER = re.compile(r"^on[a-z]+$", re.I)
 _SAFE_URI = re.compile(r"^(https?|file|mailto):", re.I)
 
+# At the component-property level, anything shaped like a handler is refused:
+# a property is a slot the renderer reads, so an unknown on* property is either
+# an attack or a mistake, and both should fail.
+#
+# Inside bound *data* the same rule is too blunt. `^on[a-z]+$` also matches
+# ordinary field names like "online", "once" and "only", and the renderer never
+# turns a data key into an attribute anyway: values reach the DOM through
+# textContent. So nested data is checked against the real DOM handler names
+# instead, which is the set that could ever mean execution.
+_DOM_HANDLERS = frozenset("""
+onclick ondblclick onmousedown onmouseup onmouseover onmouseout onmousemove
+onmouseenter onmouseleave oncontextmenu onwheel onkeydown onkeyup onkeypress
+onfocus onblur onchange oninput onsubmit onreset onselect onload onunload
+onerror onabort onbeforeunload onresize onscroll ondrag ondragstart ondragend
+ondragover ondragenter ondragleave ondrop onanimationstart onanimationend
+ontransitionend onplay onpause onended ontoggle onpointerdown onpointerup
+""".split())
+
 
 def _markup(v: Any) -> bool:
     return isinstance(v, str) and bool(_MARKUP.search(v))
@@ -72,8 +90,8 @@ def _deep_bad(v: Any) -> str | None:
         return None
     if isinstance(v, dict):
         for k, item in v.items():
-            if _HANDLER.match(str(k)):
-                return f"event-handler key {k!r} is never allowed"
+            if str(k).lower() in _DOM_HANDLERS:
+                return f"DOM event-handler key {k!r} is never allowed"
             bad = _deep_bad(item)
             if bad:
                 return bad
