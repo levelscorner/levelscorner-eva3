@@ -240,9 +240,12 @@ async def turn(body: Turn) -> dict:
     payload = {
         "messages": [{"role": "user", "content": context + body.prompt}],
         "system": system_prompt(),
-        "max_tokens": 1400,
+        # Reasoning models spend the budget thinking before they emit a token.
+        # kimi-k3 burns ~2700 output tokens on a surface of this size, so a
+        # 1400 cap returns stop_reason=max_tokens with an empty string: a
+        # correct request that looks like a broken model. Budget for the think.
+        "max_tokens": int(os.getenv("ATLAS_MAX_TOKENS", "6000")),
         "temperature": 0,
-        "reasoning": "off",
         "agent": "atlas_compose",
         "provider": PROVIDER,
     }
