@@ -1,0 +1,35 @@
+diff --git a/s17code/coding/edit.py b/s17code/coding/edit.py
+index 0b605e1..5230a72 100644
+--- a/s17code/coding/edit.py
++++ b/s17code/coding/edit.py
+@@ -144,6 +144,9 @@ def copy_within_workspace(workspace, ledger, source: str, destination: str,
+     workspace and it still refuses to clobber, because silently replacing a file
+     is the thing read-before-edit exists to prevent.
+     """
++    # Copying is exempt from read-before-edit, but not from the guard: writing
++    # a protected path is writing it, whatever the bytes came from.
++    guard_path(destination, action="copy to")
+     src = workspace.resolve(source)
+     dst = workspace.resolve(destination)
+     if not src.is_file():
+diff --git a/s17code/coding/exec.py b/s17code/coding/exec.py
+index ff77488..ab949c5 100644
+--- a/s17code/coding/exec.py
++++ b/s17code/coding/exec.py
+@@ -99,9 +99,14 @@ def _check(argv: list[str]) -> None:
+             f"{program!r} is not an allowed command. Allowed: {', '.join(allowlist())}. "
+             "The agent runs the tests; it does not get a shell."
+         )
++    # `python -c "..."` is a shell by another name, and so is `-cCODE`: the same
++    # flag with its value fused on, which no separate token check ever sees.
++    runs_python = program.startswith("python") or (
++        program in {"uv", "uvx"}
++        and any(os.path.basename(a).startswith("python") for a in argv[1:])
++    )
+     for argument in argv[1:]:
+-        # `python -c "..."` is a shell by another name.
+-        if program.startswith("python") and argument == "-c":
++        if runs_python and argument.startswith("-c"):
+             raise CommandError("python -c is refused: it is an unbounded shell")
+         if argument in FORBIDDEN_ARGS and program in {"pip", "uv"}:
+             raise CommandError(f"{argument!r} is refused for {program}")
