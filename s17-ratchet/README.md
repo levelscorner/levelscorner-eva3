@@ -68,6 +68,12 @@ refreshed tab never loses the receipt.
 
 ## Running it
 
+The fastest path is `./start-demo.sh`, which starts the gateway, proves the model
+provider answers before you rely on it, seeds a workspace containing a real defect,
+and starts Ratchet on 8117. Run it from an interactive shell so `MOONSHOT_API_KEY`
+is loaded from your profile. Everything below is the same thing done by hand.
+
+
 Ratchet needs S17Code importable and S17Code's gateway (`GLC_BASE_URL`, default
 `http://127.0.0.1:8111`) reachable, because that is where the models live.
 
